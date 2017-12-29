@@ -38,7 +38,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
      */
     public static void main(String[] args) {
         AdbCaller.printScreen();
-        BackgroundImage4Panel backgroundImage4Panel = new BackgroundImage4Panel();
+        final BackgroundImage4Panel backgroundImage4Panel = new BackgroundImage4Panel();
         backgroundImage4Panel.setVisible(true);
 
         JPanel jPanel = new JPanel() {

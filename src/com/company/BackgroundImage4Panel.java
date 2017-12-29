@@ -50,7 +50,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    BufferedImage bufferedImage = ImageIO.read(new File(Constants.TMP_IMG_PATH));
+                    BufferedImage bufferedImage = ImageIO.read(new File(Constants.SCREENSHOT_LOCATION));
                     BufferedImage newImage = new BufferedImage(675, 1200, bufferedImage.getType());
                     /**
                      * try to resize

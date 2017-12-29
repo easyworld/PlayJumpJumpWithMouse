@@ -7,9 +7,9 @@ public class Constants {
     /**
      * adb所在位置
      */
-    public static final String ADB_PATH = "C:\\Users\\RoyZ\\Desktop\\platform-tools\\adb.exe";
+    public static final String ADB_PATH = "/usr/local/bin/adb";
     /**
      * 截屏文件所在位置
      */
-    public static final String SCREENSHOT_LOCATION = "C:\\Users\\RoyZ\\Desktop\\untitled\\s.png";
+    public static final String SCREENSHOT_LOCATION = "/Users/hxz/Downloads/adb_screenshot.png";
 }

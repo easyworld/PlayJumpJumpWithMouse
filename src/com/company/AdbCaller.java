@@ -14,10 +14,11 @@ public class AdbCaller {
 
     public static void printScreen() {
         try {
-            Process p1 = Runtime.getRuntime().exec(Constants.ADB_PATH + " shell screencap -p /sdcard/screenshot.png");
+            //需要较高版本的adb.exe，我的1.0.39没问题
+            Process p1 = Runtime.getRuntime().exec("cmd /c " + Constants.ADB_PATH + " exec-out screencap -p > " + Constants.SCREENSHOT_LOCATION);
             p1.waitFor();
-            Process p2 = Runtime.getRuntime().exec(Constants.ADB_PATH + " pull /sdcard/screenshot.png " + Constants.SCREENSHOT_LOCATION);
-            p2.waitFor();
+            //Process p2 = Runtime.getRuntime().exec(Constants.ADB_PATH + " pull /sdcard/screenshot.png " + Constants.SCREENSHOT_LOCATION);
+            //p2.waitFor();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

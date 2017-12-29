@@ -14,11 +14,11 @@ public class AdbCaller {
 
     public static void printScreen() {
         try {
-            String prefix = "/bin/sh";
+            String prefix = "/bin/sh -c ";
             String os = System.getProperty("os.name");
             if (os.toLowerCase().startsWith("win"))
-                prefix = "cmd";
-            Process p1 = Runtime.getRuntime().exec(prefix + " /c " + Constants.ADB_PATH + " exec-out screencap -p > " + Constants.SCREENSHOT_LOCATION);
+                prefix = "cmd /c ";
+            Process p1 = Runtime.getRuntime().exec(prefix + Constants.ADB_PATH + " exec-out screencap -p > " + Constants.SCREENSHOT_LOCATION);
             p1.waitFor();
             //Process p2 = Runtime.getRuntime().exec(Constants.ADB_PATH + " pull /sdcard/screenshot.png " + Constants.SCREENSHOT_LOCATION);
             //p2.waitFor();

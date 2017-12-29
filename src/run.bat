@@ -1,7 +1,11 @@
 @echo off
 
+where adb>nul 2>nul
+if not %errorlevel%==0 echo can't find adb && goto exit
+
 where javac>nul 2>nul
 if not %errorlevel%==0 echo can't find javac && goto exit
+
 where java>nul 2>nul
 if not %errorlevel%==0 echo can't find java && goto exit
 

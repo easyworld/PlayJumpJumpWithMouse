@@ -13,7 +13,7 @@ adb pull /sdcard/screen.png # 下载截屏文件到本地
 ```
 
 ## 使用方法
-1. 在电脑上下载好adb
+1. 在电脑上下载好adb，并安装JDK7及以上版本以及配置好java环境变量
 2. 打开安卓手机的usb调试模式并授权连接的电脑
 >  如果是小米手机，在USB调试下方有``USB调试（安全设置）``打开允许模拟点击 感谢[@wotermelon](https://github.com/wotermelon)
 3. 打开微信跳一跳，并点击开始
@@ -27,5 +27,8 @@ windows eg: java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platfo
 
 ## 运行截图
 ![这是一个截图](https://github.com/easyworld/PlayJumpJumpWithMouse/raw/master/screenshot.png)
-## 不足
-1. java图形不太会用，导致图片刷新很慢，需要等个几秒
+
+## 推荐的adb下载地址
+* [SDK Platform-Tools for Windows](https://dl.google.com/android/repository/platform-tools-latest-windows.zip)
+* [SDK Platform-Tools for Mac](https://dl.google.com/android/repository/platform-tools-latest-darwin.zip)
+* [SDK Platform-Tools for Linux](https://dl.google.com/android/repository/platform-tools-latest-linux.zip)

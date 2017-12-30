@@ -27,7 +27,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     public BackgroundImage4Panel() {
-        setSize(675, 1200);
+        setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
@@ -51,12 +51,12 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                 super.paintComponent(g);
                 try {
                     BufferedImage bufferedImage = ImageIO.read(new File(Constants.SCREENSHOT_LOCATION));
-                    BufferedImage newImage = new BufferedImage(675, 1200, bufferedImage.getType());
+                    BufferedImage newImage = new BufferedImage(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, bufferedImage.getType());
                     /**
                      * try to resize
                      */
                     Graphics gTemp = newImage.getGraphics();
-                    gTemp.drawImage(bufferedImage, 0, 0, 675, 1200, null);
+                    gTemp.drawImage(bufferedImage, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, null);
                     gTemp.dispose();
                     bufferedImage = newImage;
                     g.drawImage(bufferedImage, 0, 0, null);
@@ -79,9 +79,9 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                     int distance = distance(firstPoint, secondPoint);
                     System.out.println("distance:" + distance);
                     isFirst = true;
-                    AdbCaller.call(distance * 2.19);//magic number
+                    AdbCaller.call(distance * Constants.SWIPE_DEPTH);//magic number
                     try {
-                        Thread.sleep(2500);// wait for screencap
+                        Thread.sleep(Constants.JUMP_INTERVAL);// wait for screencap
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }

@@ -84,7 +84,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
         opt.setRequired(false);
         options.addOption(opt);
 
-        opt = new Option("m", "play-mode", true, "1: auto-mode , 2: manual-mode , 3: semi-mode");
+        opt = new Option("m", "play-mode", true, "1: manual-mode , 2: auto-mode , 3: semi-mode");
         opt.setRequired(false);
         options.addOption(opt);
 

@@ -169,8 +169,8 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                             bufferedImage.getType());
                     if (playMode == Constants.MODE_SEMI_AUTO) {
                         firstPoint = StartCenterFinder.findStartCenter(bufferedImage);
-                        firstPoint.setLocation(firstPoint.getX() * 0.41666667, firstPoint.getY()  * 0.41666667);
-                        System.out.println(firstPoint);
+                        firstPoint.setLocation(firstPoint.getX() * resizedScreenWidth / bufferedImage.getWidth(), firstPoint.getY() * resizedScreenWidth / bufferedImage.getWidth());
+                        System.out.println("firstPoint = [x=" + firstPoint.x + ",y=" + firstPoint.y + "]");
                         isFirst = false;
                     }
                     /**

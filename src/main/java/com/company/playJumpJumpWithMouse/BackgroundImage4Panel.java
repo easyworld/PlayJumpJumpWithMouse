@@ -66,7 +66,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
 		opt.setRequired(true);
 		options.addOption(opt);
 
-		opt = new Option("o", "screenshot-path", false,
+		opt = new Option("o", "screenshot-path", true,
 				"screenshot path, eg: C:\\Users\\RoyZ\\Desktop\\untitled\\s.png");
 		opt.setRequired(false);
 		options.addOption(opt);

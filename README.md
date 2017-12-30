@@ -32,3 +32,11 @@ windows eg: java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platfo
 * [SDK Platform-Tools for Windows](https://dl.google.com/android/repository/platform-tools-latest-windows.zip)
 * [SDK Platform-Tools for Mac](https://dl.google.com/android/repository/platform-tools-latest-darwin.zip)
 * [SDK Platform-Tools for Linux](https://dl.google.com/android/repository/platform-tools-latest-linux.zip)
+
+## 感谢
+
+* [@xenv](https://github.com/xenv)的文件流截图法
+* [@hxzqlh](https://github.com/hxzqlh)的常量命名和操作系统判断
+* [@kokutoukiritsugu](https://github.com/kokutoukiritsugu)的批处理脚本
+* [@lrz0](https://github.com/lrz0)的修改建议
+

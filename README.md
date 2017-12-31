@@ -27,7 +27,7 @@ windows eg: java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platfo
 5. 半自动以及全自动模式
 
 ````
--m 1: manual-mode , 2: auto-mode , 3: semi-mode
+-m 1: manual-mode , 2: semi-mode , 3: auto-mode 
 ```
 说明:
 

@@ -17,12 +17,14 @@ adb pull /sdcard/screen.png # 下载截屏文件到本地
 2. 打开安卓手机的usb调试模式并授权连接的电脑
 >  如果是小米手机，在USB调试下方有``USB调试（安全设置）``打开允许模拟点击 感谢[@wotermelon](https://github.com/wotermelon)
 3. 打开微信跳一跳，并点击开始
-4. 输入命令
+4. 用终端打开adb，并执行一下adb shell，确认adb已经连接上手机后输入exit离开adb shell
+> 如果没有连接上，请通过搜索引擎查找原因
+5. 输入命令
 ```
 java -jar playJumpJumpWithMouse.jar -a <your adb path>
 windows eg: java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platform-tools\adb.exe"
 ```
-> 如果想调整其他参数可以使用 java -jar playJumpJumpWithMouse.jar -h 查看更多选项
+> 如果想调整其他参数或者程序自动玩跳一跳，可以使用 java -jar playJumpJumpWithMouse.jar -h 查看更多选项
 5. 在弹出的窗口中先点击小人底部适当位置，然后再点想要跳的箱子的位置即可完成
 
 ## 运行截图
@@ -39,4 +41,4 @@ windows eg: java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platfo
 * [@hxzqlh](https://github.com/hxzqlh)的常量命名和操作系统判断
 * [@kokutoukiritsugu](https://github.com/kokutoukiritsugu)的批处理脚本
 * [@lrz0](https://github.com/lrz0)的修改建议
-
+* [@bambootang](https://github.com/bambootang)的自动/半自动跳跃代码

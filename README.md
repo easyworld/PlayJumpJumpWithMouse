@@ -25,7 +25,7 @@ java -jar playJumpJumpWithMouse.jar -a <your adb path>
 windows eg: java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platform-tools\adb.exe"
 ```
 > 如果想调整其他参数或者程序自动玩跳一跳，可以使用 java -jar playJumpJumpWithMouse.jar -h 查看更多选项
-5. 在弹出的窗口中先点击小人底部适当位置，然后再点想要跳的箱子的位置即可完成
+6. 在弹出的窗口中先点击小人底部适当位置，然后再点想要跳的箱子的位置即可完成
 
 ## 运行截图
 ![这是一个截图](https://github.com/easyworld/PlayJumpJumpWithMouse/raw/master/screenshot.png)

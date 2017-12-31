@@ -25,6 +25,7 @@ import org.apache.commons.cli.PosixParser;
  * Created by RoyZ on 2017/12/28.
  */
 public class BackgroundImage4Panel extends javax.swing.JFrame {
+
     /**
      * serialVersionId
      */

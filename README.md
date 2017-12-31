@@ -17,14 +17,16 @@ adb pull /sdcard/screen.png # 下载截屏文件到本地
 2. 打开安卓手机的usb调试模式并授权连接的电脑
 >  如果是小米手机，在USB调试下方有``USB调试（安全设置）``打开允许模拟点击 感谢[@wotermelon](https://github.com/wotermelon)
 3. 打开微信跳一跳，并点击开始
-4. 输入命令
+4. 用终端打开adb，并执行一下adb shell，确认adb已经连接上手机后输入exit离开adb shell
+> 如果没有连接上，请通过搜索引擎查找原因
+5. 输入命令
 ```
 java -jar playJumpJumpWithMouse.jar -a <your adb path>
 windows eg: java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platform-tools\adb.exe"
 ```
 > 如果想调整其他参数可以使用 java -jar playJumpJumpWithMouse.jar -h 查看更多选项
 
-5. 半自动以及全自动模式
+6. 半自动以及全自动模式
 
 ````
 -m 1: manual-mode , 2: semi-mode , 3: auto-mode 
@@ -36,6 +38,7 @@ windows eg: java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platfo
 半自动模式(semi-mode):只需要点击一次鼠标,即只需要点击终点的中心点就可以了.(默认模式)
 
 全自动模式(auto-mode):也就是挂机模式,不需要人工操作,启动后既可以自动识别算法自动帮你玩跳一跳.该模式会忽略 -s 参数,强制使用手机分辨率.
+
 
 ## 运行截图
 ![这是一个截图](https://github.com/easyworld/PlayJumpJumpWithMouse/raw/master/screenshot.png)
@@ -51,4 +54,4 @@ windows eg: java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platfo
 * [@hxzqlh](https://github.com/hxzqlh)的常量命名和操作系统判断
 * [@kokutoukiritsugu](https://github.com/kokutoukiritsugu)的批处理脚本
 * [@lrz0](https://github.com/lrz0)的修改建议
-
+* [@bambootang](https://github.com/bambootang)的自动/半自动跳跃代码

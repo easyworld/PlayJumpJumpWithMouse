@@ -84,7 +84,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
         opt.setRequired(false);
         options.addOption(opt);
 
-        opt = new Option("m", "play-mode", true, "1: manual-mode , 2: auto-mode , 3: semi-mode");
+        opt = new Option("m", "play-mode", true, "1: manual-mode , 2: semi-mode , 3: auto-mode ");
         opt.setRequired(false);
         options.addOption(opt);
 
@@ -131,7 +131,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
             if (commandLine.getOptionValue('m') != null) {
                 playMode = Integer.parseInt(commandLine.getOptionValue('m'));
             } else {
-                playMode = Constants.MODE_MANUAL;
+                playMode = Constants.MODE_SEMI_AUTO;
             }
 
         } catch (ParseException e) {
@@ -261,11 +261,12 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                             }
                         } else {
                             Point colorfilterCenter = ColorFilterFinder.findEndCenter(bufferedImage, firstPoint);
-                            if (Math.abs(secondPoint.getX() - colorfilterCenter.getX()) > 10) {
+                            if (Math.abs(secondPoint.getX() - colorfilterCenter.getX()) > 20) {
                                 secondPoint = colorfilterCenter;
                             }
                         }
                         System.out.println("firstPoint = [x=" + firstPoint.x + ",y=" + firstPoint.y + "] , secondPoint = [x=" + secondPoint.x + ",y=" + secondPoint.y + "]");
+                        ColorFilterFinder.updateLastShapeMinMax(bufferedImage, firstPoint, secondPoint);
                         distance = distance(firstPoint, secondPoint);
                         AdbCaller.longPress(distance * resizedDistancePressTimeRatio);//magic number
                         try {

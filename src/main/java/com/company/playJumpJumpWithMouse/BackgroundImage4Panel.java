@@ -131,7 +131,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
             return;
         }
         //去掉了-r参数,改成根据width来进行自动换算.
-        resizedDistancePressTimeRatio = Constants.RESIZED_DISTANCE_PRESS_TIME_RATIO * 675 / resizedScreenWidth;
+        resizedDistancePressTimeRatio = Constants.RESIZED_DISTANCE_PRESS_TIME_RATIO * Constants.RESIZED_SCREEN_WIDTH / resizedScreenWidth;
         if (playMode == Constants.MODE_MANUAL || playMode == Constants.MODE_SEMI_AUTO) {
             manualMode(resizedScreenWidth, resizedScreenHeight, resizedDistancePressTimeRatio,
                     screenshotInterval, screenshotPath);
@@ -241,7 +241,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                     try {
                         BufferedImage bufferedImage = ImageIO.read(new File(screenshotPath));
                         //自动模式的魔数也改为自动计算
-                        double resizedDistancePressTimeRatio = Constants.RESIZED_DISTANCE_PRESS_TIME_RATIO * 675 / bufferedImage.getWidth();
+                        double resizedDistancePressTimeRatio = Constants.RESIZED_DISTANCE_PRESS_TIME_RATIO * Constants.RESIZED_SCREEN_WIDTH / bufferedImage.getWidth();
                         firstPoint = StartCenterFinder.findStartCenter(bufferedImage);
                         secondPoint = EndCenterFinder.findEndCenter(bufferedImage, firstPoint);
                         // System.out.println(firstPoint + " , " + secondPoint);

@@ -48,8 +48,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
     /**
      * 测试入口
      *
-     * @param args
-     *            参数列表
+     * @param args 参数列表
      */
     public static void main(String[] args) {
 
@@ -65,7 +64,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
         options.addOption(opt);
 
         opt = new Option("a", "adb-path", true,
-                "adb path in system, eg: C:\\Users\\RoyZ\\Desktop\\platform-tools\\adb.exe");
+                "adb path in system,required, eg: C:\\Users\\RoyZ\\Desktop\\platform-tools\\adb.exe");
         opt.setRequired(true);
         options.addOption(opt);
 
@@ -78,15 +77,11 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
         opt.setRequired(false);
         options.addOption(opt);
 
-        opt = new Option("r", "ratio", true, "resized distance press time ratio, eg: 2.19");
-        opt.setRequired(false);
-        options.addOption(opt);
-
         opt = new Option("t", "interval", true, "screenshot interval, unit millisecond, eg: 2500");
         opt.setRequired(false);
         options.addOption(opt);
 
-        opt = new Option("m", "play-mode", true, "1: manual-mode , 2: semi-mode , 3: auto-mode ");
+        opt = new Option("m", "play-mode", true, "1: manual-mode , 2: semi-mode(default) , 3: auto-mode ");
         opt.setRequired(false);
         options.addOption(opt);
 
@@ -120,11 +115,6 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                 resizedScreenWidth = Constants.RESIZED_SCREEN_WIDTH;
                 resizedScreenHeight = Constants.RESIZED_SCREEN_HEIGHT;
             }
-            if (commandLine.getOptionValue('r') != null) {
-                resizedDistancePressTimeRatio = Double.parseDouble(commandLine.getOptionValue('r'));
-            } else {
-                resizedDistancePressTimeRatio = Constants.RESIZED_DISTANCE_PRESS_TIME_RATIO;
-            }
             if (commandLine.getOptionValue('t') != null) {
                 screenshotInterval = Integer.parseInt(commandLine.getOptionValue('t'));
             } else {
@@ -140,18 +130,19 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
             hf.printHelp("PlayJumpJumpWithMouse", options, true);
             return;
         }
-
+        //去掉了-r参数,改成根据width来进行自动换算.
+        resizedDistancePressTimeRatio = Constants.RESIZED_DISTANCE_PRESS_TIME_RATIO * Constants.RESIZED_SCREEN_WIDTH / resizedScreenWidth;
         if (playMode == Constants.MODE_MANUAL || playMode == Constants.MODE_SEMI_AUTO) {
-            manualMode(resizedScreenWidth, resizedScreenHeight, resizedDistancePressTimeRatio, screenshotInterval,
-                    screenshotPath);
+            manualMode(resizedScreenWidth, resizedScreenHeight, resizedDistancePressTimeRatio,
+                    screenshotInterval, screenshotPath);
         } else if (playMode == Constants.MODE_AUTO) {
-            autoJumpMode(resizedDistancePressTimeRatio, screenshotInterval, screenshotPath);
+            autoJumpMode(screenshotInterval, screenshotPath);
         }
 
     }
 
     private static void manualMode(final int resizedScreenWidth, final int resizedScreenHeight,
-            final double resizedDistancePressTimeRatio, final int screenshotInterval, final String screenshotPath) {
+                                   final double resizedDistancePressTimeRatio, final int screenshotInterval, final String screenshotPath) {
 
         AdbCaller.printScreen();
         final BackgroundImage4Panel backgroundImage4Panel = new BackgroundImage4Panel();
@@ -241,21 +232,23 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
         });
     }
 
-    private static void autoJumpMode(final double resizedDistancePressTimeRatio, final int screenshotInterval,
-            final String screenshotPath) {
+    private static void autoJumpMode(final int screenshotInterval,
+                                     final String screenshotPath) {
         new Thread() {
             public void run() {
                 while (true) {
                     AdbCaller.printScreen();
                     try {
                         BufferedImage bufferedImage = ImageIO.read(new File(screenshotPath));
+                        //自动模式的魔数也改为自动计算
+                        double resizedDistancePressTimeRatio = Constants.RESIZED_DISTANCE_PRESS_TIME_RATIO * Constants.RESIZED_SCREEN_WIDTH / bufferedImage.getWidth();
                         firstPoint = StartCenterFinder.findStartCenter(bufferedImage);
                         secondPoint = EndCenterFinder.findEndCenter(bufferedImage, firstPoint);
                         // System.out.println(firstPoint + " , " + secondPoint);
                         int distance = secondPoint == null ? 0 : distance(firstPoint, secondPoint);
                         if (secondPoint == null || secondPoint.getX() == 0 || distance < 75 ||
-                        // true || //放开可改为全部用ColorFilterFinder来做下一个中心点的查找
-                        Math.abs(secondPoint.getX() - firstPoint.getX()) < 38) {
+                                // true || //放开可改为全部用ColorFilterFinder来做下一个中心点的查找
+                                Math.abs(secondPoint.getX() - firstPoint.getX()) < 38) {
                             secondPoint = ColorFilterFinder.findEndCenter(bufferedImage, firstPoint);
                             if (secondPoint == null) {
                                 AdbCaller.printScreen();
@@ -272,10 +265,10 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                         ColorFilterFinder.updateLastShapeMinMax(bufferedImage, firstPoint, secondPoint);
                         distance = distance(firstPoint, secondPoint);
                         AdbCaller.longPress(distance * resizedDistancePressTimeRatio);// magic
-                                                                                      // number
+                        // number
                         try {
                             Thread.sleep(screenshotInterval);// wait for
-                                                             // screencap
+                            // screencap
                         } catch (InterruptedException e1) {
                             e1.printStackTrace();
                         }
@@ -291,8 +284,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
     /**
      * 对图片进行强制放大或缩小
      *
-     * @param originalImage
-     *            原始图片
+     * @param originalImage 原始图片
      * @return
      */
     public static BufferedImage zoomInImage(BufferedImage originalImage, int width, int height) {

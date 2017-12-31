@@ -24,8 +24,21 @@ adb pull /sdcard/screen.png # 下载截屏文件到本地
 java -jar playJumpJumpWithMouse.jar -a <your adb path>
 windows eg: java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platform-tools\adb.exe"
 ```
-> 如果想调整其他参数或者程序自动玩跳一跳，可以使用 java -jar playJumpJumpWithMouse.jar -h 查看更多选项
-6. 在弹出的窗口中先点击小人底部适当位置，然后再点想要跳的箱子的位置即可完成
+> 如果想调整其他参数可以使用 java -jar playJumpJumpWithMouse.jar -h 查看更多选项
+
+6. 半自动以及全自动模式
+
+````
+-m 1: manual-mode , 2: semi-mode , 3: auto-mode 
+```
+说明:
+
+手动模式(manual-mode):弹出的窗口中先点击小人底部适当位置，然后再点想要跳的箱子的中心位置即可完成.
+
+半自动模式(semi-mode):只需要点击一次鼠标,即只需要点击终点的中心点就可以了.(默认模式)
+
+全自动模式(auto-mode):也就是挂机模式,不需要人工操作,启动后既可以自动识别算法自动帮你玩跳一跳.该模式会忽略 -s 参数,强制使用手机分辨率.
+
 
 ## 运行截图
 ![这是一个截图](https://github.com/easyworld/PlayJumpJumpWithMouse/raw/master/screenshot.png)

@@ -16,6 +16,8 @@ public class ColorFilterFinder {
 
     static Point startCenterPoint;
 
+    static int lastShapeMinMax = 150;
+
     public static Point findEndCenter(BufferedImage bufferedImage, Point startCenterPoint) {
         ColorFilterFinder.startCenterPoint = startCenterPoint;
         bgColor = new Color(bufferedImage.getRGB(540, 700));
@@ -24,7 +26,7 @@ public class ColorFilterFinder {
         Point tmpEndCenterPoint;
 
         //排除小人所在的位置的整个柱状区域检测,为了排除某些特定情况的干扰.
-        Rectangle rectangle = new Rectangle((int) (startCenterPoint.getX() - 75), 0, 150, (int) startCenterPoint.getY());
+        Rectangle rectangle = new Rectangle((int) (startCenterPoint.getX() - lastShapeMinMax / 2), 0, lastShapeMinMax, (int) startCenterPoint.getY());
 
 
         Color lastColor = bgColor;
@@ -102,6 +104,39 @@ public class ColorFilterFinder {
             }
         }
         return new Point(centX, centY);
+    }
+
+
+    private static boolean like(Color a, Color b) {
+        return !((Math.abs(a.getRed() - b.getRed()) +
+                Math.abs(a.getBlue() - b.getBlue()) +
+                Math.abs(a.getGreen() - b.getGreen()) >= 20)
+                ||
+                (Math.abs(a.getRed() - b.getRed()) >= 15
+                        || Math.abs(a.getBlue() - b.getBlue()) >= 15
+                        || Math.abs(a.getGreen() - b.getGreen()) >= 15));
+    }
+
+
+
+    public static void updateLastShapeMinMax(BufferedImage bufferedImage, Point first, Point second) {
+        if (first.x < second.y) {
+            for (int x = second.x; x < bufferedImage.getWidth(); x++) {
+                Color newColor = new Color(bufferedImage.getRGB(x, second.y));
+                if (like(newColor, bgColor)) {
+                    lastShapeMinMax = (int) Math.max((x - second.x) * 1.5, 150);
+                    break;
+                }
+            }
+        } else {
+            for (int x = second.x; x >= 10; x--) {
+                Color newColor = new Color(bufferedImage.getRGB(x, second.y));
+                if (like(newColor, bgColor)) {
+                    lastShapeMinMax = (int) Math.max((second.x - x) * 1.5, 150);
+                    break;
+                }
+            }
+        }
     }
 
     public static void main(String[] args) throws IOException {

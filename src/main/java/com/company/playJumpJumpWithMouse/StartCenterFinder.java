@@ -104,7 +104,7 @@ public class StartCenterFinder {
                         centerX = w + 38;
                         centerY = h;
 
-                        return new Point(centerX, (centerY + 5));
+                        return new Point(centerX, (centerY + 3));
                     }
                 }
             }
@@ -128,9 +128,13 @@ public class StartCenterFinder {
 
     public static void main(String[] args) throws IOException {
 
-        BufferedImage bufferedImage = ImageIO.read(new File("/Users/tangshuai/Desktop/tmp/665_908.png"));
+        BufferedImage bufferedImage = ImageIO.read(new File("/Users/tangshuai/Desktop/device-2017-12-31-112711.png"));
         Point point = StartCenterFinder.findStartCenter(bufferedImage);
         System.out.println(point);
+
+        //手动测量,精确计算mac number
+        AdbCaller.setAdbPath("adb");
+//        AdbCaller.longPress(1.36875*522.8);
 
     }
 

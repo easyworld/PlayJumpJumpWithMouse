@@ -26,9 +26,9 @@ windows eg: java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platfo
 ```
 > 如果想调整其他参数可以使用 java -jar playJumpJumpWithMouse.jar -h 查看更多选项
 
-6. 半自动以及全自动模式
+## 半自动以及全自动模式
 
-````
+```
 -m 1: manual-mode , 2: semi-mode , 3: auto-mode 
 ```
 说明:

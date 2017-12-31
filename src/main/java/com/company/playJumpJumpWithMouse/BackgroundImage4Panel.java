@@ -52,6 +52,12 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
      *            参数列表
      */
     public static void main(String[] args) {
+        //1.36875
+//        args = new String[]{"-aadb", "-o/Users/tangshuai/Desktop/s.png", "-m3"};
+//        args = new String[]{"-aadb", "-o/Users/tangshuai/Desktop/s.png", "-s675x1200"};
+//        args = new String[]{"-aadb", "-o/Users/tangshuai/Desktop/s.png", "-s500x" + (500 * 1200 / 675)};
+//        args = new String[]{"-aadb", "-o/Users/tangshuai/Desktop/s.png", "-s1080x1920", "-r3.285", "-m3"};
+
 
         final int resizedScreenWidth, resizedScreenHeight;
         final double resizedDistancePressTimeRatio;
@@ -65,7 +71,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
         options.addOption(opt);
 
         opt = new Option("a", "adb-path", true,
-                "adb path in system, eg: C:\\Users\\RoyZ\\Desktop\\platform-tools\\adb.exe");
+                "adb path in system,required, eg: C:\\Users\\RoyZ\\Desktop\\platform-tools\\adb.exe");
         opt.setRequired(true);
         options.addOption(opt);
 
@@ -78,15 +84,11 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
         opt.setRequired(false);
         options.addOption(opt);
 
-        opt = new Option("r", "ratio", true, "resized distance press time ratio, eg: 2.19");
-        opt.setRequired(false);
-        options.addOption(opt);
-
         opt = new Option("t", "interval", true, "screenshot interval, unit millisecond, eg: 2500");
         opt.setRequired(false);
         options.addOption(opt);
 
-        opt = new Option("m", "play-mode", true, "1: manual-mode , 2: semi-mode , 3: auto-mode ");
+        opt = new Option("m", "play-mode", true, "1: manual-mode , 2: semi-mode(default) , 3: auto-mode ");
         opt.setRequired(false);
         options.addOption(opt);
 
@@ -120,11 +122,6 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                 resizedScreenWidth = Constants.RESIZED_SCREEN_WIDTH;
                 resizedScreenHeight = Constants.RESIZED_SCREEN_HEIGHT;
             }
-            if (commandLine.getOptionValue('r') != null) {
-                resizedDistancePressTimeRatio = Double.parseDouble(commandLine.getOptionValue('r'));
-            } else {
-                resizedDistancePressTimeRatio = Constants.RESIZED_DISTANCE_PRESS_TIME_RATIO;
-            }
             if (commandLine.getOptionValue('t') != null) {
                 screenshotInterval = Integer.parseInt(commandLine.getOptionValue('t'));
             } else {
@@ -140,12 +137,12 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
             hf.printHelp("PlayJumpJumpWithMouse", options, true);
             return;
         }
-
+        //去掉了-r参数,改成根据width来进行自动换算.
+        resizedDistancePressTimeRatio = Constants.RESIZED_DISTANCE_PRESS_TIME_RATIO * 675 / resizedScreenWidth;
         if (playMode == Constants.MODE_MANUAL || playMode == Constants.MODE_SEMI_AUTO) {
-            manualMode(resizedScreenWidth, resizedScreenHeight, resizedDistancePressTimeRatio, screenshotInterval,
-                    screenshotPath);
+            manualMode(resizedScreenWidth, resizedScreenHeight, resizedDistancePressTimeRatio, screenshotInterval, screenshotPath);
         } else if (playMode == Constants.MODE_AUTO) {
-            autoJumpMode(resizedDistancePressTimeRatio, screenshotInterval, screenshotPath);
+            autoJumpMode(screenshotInterval, screenshotPath);
         }
 
     }
@@ -249,6 +246,8 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                     AdbCaller.printScreen();
                     try {
                         BufferedImage bufferedImage = ImageIO.read(new File(screenshotPath));
+                        //自动模式的魔数也改为自动计算
+                        double resizedDistancePressTimeRatio = Constants.RESIZED_DISTANCE_PRESS_TIME_RATIO * 675 / bufferedImage.getWidth();
                         firstPoint = StartCenterFinder.findStartCenter(bufferedImage);
                         secondPoint = EndCenterFinder.findEndCenter(bufferedImage, firstPoint);
                         // System.out.println(firstPoint + " , " + secondPoint);

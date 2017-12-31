@@ -48,7 +48,8 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
     /**
      * 测试入口
      *
-     * @param args 参数列表
+     * @param args
+     *            参数列表
      */
     public static void main(String[] args) {
 
@@ -141,15 +142,16 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
         }
 
         if (playMode == Constants.MODE_MANUAL || playMode == Constants.MODE_SEMI_AUTO) {
-            manualMode(resizedScreenWidth, resizedScreenHeight, resizedDistancePressTimeRatio, screenshotInterval, screenshotPath);
+            manualMode(resizedScreenWidth, resizedScreenHeight, resizedDistancePressTimeRatio, screenshotInterval,
+                    screenshotPath);
         } else if (playMode == Constants.MODE_AUTO) {
             autoJumpMode(resizedDistancePressTimeRatio, screenshotInterval, screenshotPath);
         }
 
     }
 
-
-    private static void manualMode(final int resizedScreenWidth, final int resizedScreenHeight, final double resizedDistancePressTimeRatio, final int screenshotInterval, final String screenshotPath) {
+    private static void manualMode(final int resizedScreenWidth, final int resizedScreenHeight,
+            final double resizedDistancePressTimeRatio, final int screenshotInterval, final String screenshotPath) {
 
         AdbCaller.printScreen();
         final BackgroundImage4Panel backgroundImage4Panel = new BackgroundImage4Panel();
@@ -170,7 +172,8 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                             bufferedImage.getType());
                     if (playMode == Constants.MODE_SEMI_AUTO) {
                         firstPoint = StartCenterFinder.findStartCenter(bufferedImage);
-                        firstPoint.setLocation(firstPoint.getX() * resizedScreenWidth / bufferedImage.getWidth(), firstPoint.getY() * resizedScreenWidth / bufferedImage.getWidth());
+                        firstPoint.setLocation(firstPoint.getX() * resizedScreenWidth / bufferedImage.getWidth(),
+                                firstPoint.getY() * resizedScreenWidth / bufferedImage.getWidth());
                         System.out.println("firstPoint = [x=" + firstPoint.x + ",y=" + firstPoint.y + "]");
                         isFirst = false;
                     }
@@ -238,8 +241,8 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
         });
     }
 
-
-    private static void autoJumpMode(final double resizedDistancePressTimeRatio, final int screenshotInterval, final String screenshotPath) {
+    private static void autoJumpMode(final double resizedDistancePressTimeRatio, final int screenshotInterval,
+            final String screenshotPath) {
         new Thread() {
             public void run() {
                 while (true) {
@@ -248,13 +251,11 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                         BufferedImage bufferedImage = ImageIO.read(new File(screenshotPath));
                         firstPoint = StartCenterFinder.findStartCenter(bufferedImage);
                         secondPoint = EndCenterFinder.findEndCenter(bufferedImage, firstPoint);
-//                        System.out.println(firstPoint + " , " + secondPoint);
+                        // System.out.println(firstPoint + " , " + secondPoint);
                         int distance = secondPoint == null ? 0 : distance(firstPoint, secondPoint);
-                        if (secondPoint == null ||
-                                secondPoint.getX() == 0 ||
-                                distance < 75 ||
-//                                true || //放开可改为全部用ColorFilterFinder来做下一个中心点的查找
-                                Math.abs(secondPoint.getX() - firstPoint.getX()) < 38) {
+                        if (secondPoint == null || secondPoint.getX() == 0 || distance < 75 ||
+                        // true || //放开可改为全部用ColorFilterFinder来做下一个中心点的查找
+                        Math.abs(secondPoint.getX() - firstPoint.getX()) < 38) {
                             secondPoint = ColorFilterFinder.findEndCenter(bufferedImage, firstPoint);
                             if (secondPoint == null) {
                                 AdbCaller.printScreen();
@@ -266,12 +267,15 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                                 secondPoint = colorfilterCenter;
                             }
                         }
-                        System.out.println("firstPoint = [x=" + firstPoint.x + ",y=" + firstPoint.y + "] , secondPoint = [x=" + secondPoint.x + ",y=" + secondPoint.y + "]");
+                        System.out.println("firstPoint = [x=" + firstPoint.x + ",y=" + firstPoint.y
+                                + "] , secondPoint = [x=" + secondPoint.x + ",y=" + secondPoint.y + "]");
                         ColorFilterFinder.updateLastShapeMinMax(bufferedImage, firstPoint, secondPoint);
                         distance = distance(firstPoint, secondPoint);
-                        AdbCaller.longPress(distance * resizedDistancePressTimeRatio);//magic number
+                        AdbCaller.longPress(distance * resizedDistancePressTimeRatio);// magic
+                                                                                      // number
                         try {
-                            Thread.sleep(screenshotInterval);// wait for screencap
+                            Thread.sleep(screenshotInterval);// wait for
+                                                             // screencap
                         } catch (InterruptedException e1) {
                             e1.printStackTrace();
                         }
@@ -287,7 +291,8 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
     /**
      * 对图片进行强制放大或缩小
      *
-     * @param originalImage 原始图片
+     * @param originalImage
+     *            原始图片
      * @return
      */
     public static BufferedImage zoomInImage(BufferedImage originalImage, int width, int height) {

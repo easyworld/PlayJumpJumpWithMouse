@@ -12,6 +12,7 @@
 
 # Package Files #
 *.jar
+!playJumpJumpWithMouse-*.jar
 *.war
 *.ear
 *.zip

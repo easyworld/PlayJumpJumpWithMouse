@@ -27,7 +27,7 @@ public class Constants {
      * 在675*1200分辨率下，跳跃蓄力时间与距离像素的比率<br>
      * 可根据实际情况自行调整
      */
-    public static final float RESIZED_DISTANCE_PRESS_TIME_RATIO = 2.175f;
+    public static final float RESIZED_DISTANCE_PRESS_TIME_RATIO = 2.265f;
 
     /**
      * 截图间隔

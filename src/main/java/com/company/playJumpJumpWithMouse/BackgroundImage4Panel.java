@@ -52,6 +52,8 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
      */
     public static void main(String[] args) {
 
+        ScreenAdapter.SCREEN_DPI = AdbCaller.getSize();
+
         final int resizedScreenWidth, resizedScreenHeight;
         final double resizedDistancePressTimeRatio;
         final int screenshotInterval;
@@ -196,7 +198,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                     int distance = distance(firstPoint, secondPoint);
                     System.out.println("distance:" + distance);
                     isFirst = true;
-                    AdbCaller.longPress(distance * resizedDistancePressTimeRatio);// magic
+                    AdbCaller.longPress(distance * resizedDistancePressTimeRatio, null);// magic
                     // number
                     try {
                         Thread.sleep(screenshotInterval);// wait for screencap
@@ -264,7 +266,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                                 + "] , secondPoint = [x=" + secondPoint.x + ",y=" + secondPoint.y + "]");
                         ColorFilterFinder.updateLastShapeMinMax(bufferedImage, firstPoint, secondPoint);
                         distance = distance(firstPoint, secondPoint);
-                        AdbCaller.longPress(distance * resizedDistancePressTimeRatio);// magic
+                        AdbCaller.longPress(distance * resizedDistancePressTimeRatio, bufferedImage);// magic
                         // number
                         try {
                             Thread.sleep(screenshotInterval);// wait for

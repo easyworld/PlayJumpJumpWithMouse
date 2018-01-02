@@ -55,7 +55,7 @@ public class AdbCaller {
      * 当改进的截图方法不能正常执行时降级为常规方法
      */
     public static void printScreen() {
-        if (error == null || error || !error) {
+        if (error != null && error) {
             printScreenWithOld();
         } else {
             try {

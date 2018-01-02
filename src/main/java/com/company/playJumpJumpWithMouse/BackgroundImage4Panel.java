@@ -38,6 +38,8 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
 
     private static int playMode = Constants.MODE_MANUAL;
 
+    private static BufferedImage bufferedImage;
+
     /**
      * Creates new form NewJFrame
      */
@@ -160,7 +162,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    BufferedImage bufferedImage = ImageIO.read(new File(screenshotPath));
+                    bufferedImage = ImageIO.read(new File(screenshotPath));
                     BufferedImage newImage = new BufferedImage(resizedScreenWidth, resizedScreenHeight,
                             bufferedImage.getType());
                     if (playMode == Constants.MODE_SEMI_AUTO) {
@@ -198,7 +200,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                     int distance = distance(firstPoint, secondPoint);
                     System.out.println("distance:" + distance);
                     isFirst = true;
-                    AdbCaller.longPress(distance * resizedDistancePressTimeRatio, null);// magic
+                    AdbCaller.longPress(distance * resizedDistancePressTimeRatio, bufferedImage);// magic
                     // number
                     try {
                         Thread.sleep(screenshotInterval);// wait for screencap

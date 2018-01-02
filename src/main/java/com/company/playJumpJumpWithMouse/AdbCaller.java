@@ -30,8 +30,8 @@ public class AdbCaller {
      */
     public static void longPress(double timeMilli, BufferedImage image) {
         try {
-            int width = image.getWidth() / 2 + (int) (Math.random() * 100);
-            int height = image.getHeight() - 200 + (int) (Math.random() * 100);
+            int width = image.getWidth() / 3 + (int) (Math.random() * image.getWidth() / 3);
+            int height = image.getHeight() - 300 + (int) (Math.random() * 200);
             Process process = Runtime.getRuntime()
                     .exec(adbPath + " shell input touchscreen swipe " + width + " " + height + " " + width + " " + height + " " + (int) timeMilli);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));

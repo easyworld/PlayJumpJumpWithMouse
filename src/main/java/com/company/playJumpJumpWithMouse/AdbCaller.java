@@ -30,15 +30,18 @@ public class AdbCaller {
      */
     public static void longPress(double timeMilli, BufferedImage image) {
         try {
-            int width = image.getWidth() / 3 + (int) (Math.random() * image.getWidth() / 3);
-            int height = image.getHeight() - 300 + (int) (Math.random() * 200);
+            int x = image.getWidth() / 3 + (int) (Math.random() * image.getWidth() / 3);
+            int y = image.getHeight() - 300 + (int) (Math.random() * 200);
+            int x2 = (int) (x + ((Math.random() - 0.5) * 20));//左右10个像素随机
+            int y2 = (int) (y + ((Math.random() - 0.5) * 20));//上下10个像素随机
             Process process = Runtime.getRuntime()
-                    .exec(adbPath + " shell input touchscreen swipe " + width + " " + height + " " + width + " " + height + " " + (int) timeMilli);
+                    .exec(adbPath + " shell input touchscreen swipe " + x + " " + y + " " + x2 + " " + y2 + " " + (int) timeMilli);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String s;
             while ((s = bufferedReader.readLine()) != null)
                 System.out.println(s);
             process.waitFor();
+            JumpPerfectControl.jumpNext();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -52,7 +55,7 @@ public class AdbCaller {
      * 当改进的截图方法不能正常执行时降级为常规方法
      */
     public static void printScreen() {
-        if (error != null && error) {
+        if (error == null || error || !error) {
             printScreenWithOld();
         } else {
             try {
@@ -111,7 +114,7 @@ public class AdbCaller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 480;
+        return 400;
     }
 
     public static void main(String[] args) {

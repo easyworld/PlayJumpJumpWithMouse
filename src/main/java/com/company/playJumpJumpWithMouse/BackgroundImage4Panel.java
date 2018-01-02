@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
@@ -89,6 +90,10 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
         opt.setRequired(false);
         options.addOption(opt);
 
+        opt = new Option("r", "random", true, "random done perfect, Y:yes, N:no");
+        opt.setRequired(false);
+        options.addOption(opt);
+
         HelpFormatter hf = new HelpFormatter();
         hf.setWidth(110);
         CommandLine commandLine = null;
@@ -128,6 +133,11 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                 playMode = Integer.parseInt(commandLine.getOptionValue('m'));
             } else {
                 playMode = Constants.MODE_SEMI_AUTO;
+            }
+            if (commandLine.getOptionValue('r') != null) {
+                if (commandLine.getOptionValue('r').toLowerCase().trim().equals("y")) {
+                    JumpPerfectControl.random = true;
+                }
             }
 
         } catch (ParseException e) {
@@ -203,7 +213,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                     AdbCaller.longPress(distance * resizedDistancePressTimeRatio, bufferedImage);// magic
                     // number
                     try {
-                        Thread.sleep(screenshotInterval);// wait for screencap
+                        Thread.sleep(screenshotInterval * 2 / 3 + new Random().nextInt(screenshotInterval / 3));// wait for screencap
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }
@@ -250,9 +260,9 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                         secondPoint = EndCenterFinder.findEndCenter(bufferedImage, firstPoint);
                         // System.out.println(firstPoint + " , " + secondPoint);
                         int distance = secondPoint == null ? 0 : distance(firstPoint, secondPoint);
-                        if (secondPoint == null || secondPoint.getX() == 0 || distance < 75 ||
+                        if (secondPoint == null || secondPoint.getX() == 0 || distance < ScreenAdapter.getBabyWidth() ||
                                 // true || //放开可改为全部用ColorFilterFinder来做下一个中心点的查找
-                                Math.abs(secondPoint.getX() - firstPoint.getX()) < 38) {
+                                Math.abs(secondPoint.getX() - firstPoint.getX()) < ScreenAdapter.getBabyWidth() / 2) {
                             secondPoint = ColorFilterFinder.findEndCenter(bufferedImage, firstPoint);
                             if (secondPoint == null) {
                                 AdbCaller.printScreen();
@@ -260,7 +270,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                             }
                         } else {
                             Point colorfilterCenter = ColorFilterFinder.findEndCenter(bufferedImage, firstPoint);
-                            if (Math.abs(secondPoint.getX() - colorfilterCenter.getX()) > 20) {
+                            if (Math.abs(secondPoint.getX() - colorfilterCenter.getX()) > ScreenAdapter.getBabyWidth() / 3) {
                                 secondPoint = colorfilterCenter;
                             }
                         }
@@ -271,7 +281,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                         AdbCaller.longPress(distance * resizedDistancePressTimeRatio, bufferedImage);// magic
                         // number
                         try {
-                            Thread.sleep(screenshotInterval);// wait for
+                            Thread.sleep(screenshotInterval * 2 / 3 + new Random().nextInt(screenshotInterval / 3));// wait for screencap
                             // screencap
                         } catch (InterruptedException e1) {
                             e1.printStackTrace();

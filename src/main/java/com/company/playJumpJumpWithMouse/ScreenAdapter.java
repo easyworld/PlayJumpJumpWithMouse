@@ -39,9 +39,9 @@ public class ScreenAdapter {
     public static int SCREEN_DPI = Constants.XHDPI;
 
     public static int getShapeMinWidth() {
-        if (SCREEN_DPI >= Constants.XXHDPI) {
+        if (SCREEN_DPI > Constants.XXHDPI) {
             return 200;
-        } else if (SCREEN_DPI >= Constants.XHDPI) {
+        } else if (SCREEN_DPI > Constants.XHDPI) {
             return 150;
         } else {
             return 100;
@@ -49,9 +49,9 @@ public class ScreenAdapter {
     }
 
     public static int[] getCenterArrays() {
-        if (SCREEN_DPI >= Constants.XXHDPI) {
+        if (SCREEN_DPI > Constants.XXHDPI) {
             return centers_xxhdpi;
-        } else if (SCREEN_DPI >= Constants.XHDPI) {
+        } else if (SCREEN_DPI > Constants.XHDPI) {
             return centers_xhdpi;
         } else {
             return centers_hdpi;
@@ -59,9 +59,9 @@ public class ScreenAdapter {
     }
 
     public static int getBabyWidth() {
-        if (SCREEN_DPI >= Constants.XXHDPI) {
+        if (SCREEN_DPI > Constants.XXHDPI) {
             return 100;
-        } else if (SCREEN_DPI >= Constants.XHDPI) {
+        } else if (SCREEN_DPI > Constants.XHDPI) {
             return 75;
         } else {
             return 50;
@@ -69,9 +69,9 @@ public class ScreenAdapter {
     }
 
     public static int getMaxShapeHeight() {
-        if (SCREEN_DPI >= Constants.XXHDPI) {
+        if (SCREEN_DPI > Constants.XXHDPI) {
             return 345;
-        } else if (SCREEN_DPI >= Constants.XHDPI) {
+        } else if (SCREEN_DPI > Constants.XHDPI) {
             return 230;
         } else {
             return 173;
@@ -79,9 +79,9 @@ public class ScreenAdapter {
     }
 
     public static int getMinShapeHeight() {
-        if (SCREEN_DPI >= Constants.XXHDPI) {
+        if (SCREEN_DPI > Constants.XXHDPI) {
             return 52;
-        } else if (SCREEN_DPI >= Constants.XHDPI) {
+        } else if (SCREEN_DPI > Constants.XHDPI) {
             return 40;
         } else {
             return 26;
@@ -89,9 +89,9 @@ public class ScreenAdapter {
     }
 
     public static int getMinWhiteHeight(){
-        if (SCREEN_DPI >= Constants.XXHDPI) {
+        if (SCREEN_DPI > Constants.XXHDPI) {
             return 24;
-        } else if (SCREEN_DPI >= Constants.XHDPI) {
+        } else if (SCREEN_DPI > Constants.XHDPI) {
             return 18;
         } else {
             return 12;

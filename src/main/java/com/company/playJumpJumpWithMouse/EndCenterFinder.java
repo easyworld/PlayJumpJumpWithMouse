@@ -49,7 +49,7 @@ public class EndCenterFinder {
                 }
             }
         }
-        return new Point((int) (centerX * scaleX), (int) ((centerY - 1)));
+        return new Point((int) (centerX * scaleX), JumpPerfectControl.needMis() ? centerY - 10 : centerY - 1);
     }
 
     static Point findWhiteCenter(BufferedImage bufferedImage, int x, int y, Point startCenterPoint) {

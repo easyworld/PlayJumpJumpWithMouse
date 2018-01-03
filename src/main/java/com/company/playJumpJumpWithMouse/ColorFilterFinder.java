@@ -19,7 +19,7 @@ public class ColorFilterFinder {
 
     public static Point findEndCenter(BufferedImage bufferedImage, Point startCenterPoint) {
         ColorFilterFinder.startCenterPoint = startCenterPoint;
-        bgColor = new Color(bufferedImage.getRGB(bufferedImage.getWidth() / 2, 120));
+        bgColor = new Color(bufferedImage.getRGB(bufferedImage.getWidth() / 2, 300));
 
         Point tmpStartCenterPoint;
         Point tmpEndCenterPoint;
@@ -29,7 +29,7 @@ public class ColorFilterFinder {
                 (int) startCenterPoint.getY());
 
         Color lastColor = bgColor;
-        for (int y = bufferedImage.getWidth() / 3; y < startCenterPoint.y; y++) {
+        for (int y = bufferedImage.getHeight() / 3; y < startCenterPoint.y; y++) {
             for (int x = 10; x < bufferedImage.getWidth(); x++) {
                 if (rectangle.contains(x, y)) {
                     continue;
@@ -37,13 +37,11 @@ public class ColorFilterFinder {
                 Color newColor = new Color(bufferedImage.getRGB(x, y));
                 if ((Math.abs(newColor.getRed() - lastColor.getRed())
                         + Math.abs(newColor.getBlue() - lastColor.getBlue())
-                        + Math.abs(newColor.getGreen() - lastColor.getGreen()) >= 20)
-                        || (Math.abs(newColor.getRed() - lastColor.getRed()) >= 10
-                        || Math.abs(newColor.getBlue() - lastColor.getBlue()) >= 10
-                        || Math.abs(newColor.getGreen() - lastColor.getGreen()) >= 10)) {
-                    // System.out.println(BufferImageTest.toHexFromColor(newColor));
-                    // System.out.println(BufferImageTest.toHexFromColor(lastColor));
-                    // System.out.println("y = " + y + " x = " + x);
+                        + Math.abs(newColor.getGreen() - lastColor.getGreen()) >= 24)
+                        || (Math.abs(newColor.getRed() - lastColor.getRed()) >= 12
+                        || Math.abs(newColor.getBlue() - lastColor.getBlue()) >= 12
+                        || Math.abs(newColor.getGreen() - lastColor.getGreen()) >= 12)) {
+//                    System.out.println("y = " + y + " x = " + x);
                     tmpStartCenterPoint = findStartCenterPoint(bufferedImage, x, y);
                     // System.out.println(tmpStartCenterPoint);
                     tmpEndCenterPoint = findEndCenterPoint(bufferedImage, tmpStartCenterPoint);
@@ -81,6 +79,9 @@ public class ColorFilterFinder {
         if (centY - tmpStartCenterPoint.y > ScreenAdapter.getMaxShapeHeight()) {
             centY = tmpStartCenterPoint.y + ScreenAdapter.getMaxShapeHeight();
         }
+        if (JumpPerfectControl.needMis()) {
+            centY -= 10;
+        }
         return new Point(centX, centY);
     }
 
@@ -91,10 +92,10 @@ public class ColorFilterFinder {
         for (int i = x; i < bufferedImage.getWidth(); i++) {
             Color newColor = new Color(bufferedImage.getRGB(i, y));
             if ((Math.abs(newColor.getRed() - lastColor.getRed()) + Math.abs(newColor.getBlue() - lastColor.getBlue())
-                    + Math.abs(newColor.getGreen() - lastColor.getGreen()) >= 20)
-                    || (Math.abs(newColor.getRed() - lastColor.getRed()) >= 15
-                    || Math.abs(newColor.getBlue() - lastColor.getBlue()) >= 15
-                    || Math.abs(newColor.getGreen() - lastColor.getGreen()) >= 15)) {
+                    + Math.abs(newColor.getGreen() - lastColor.getGreen()) >= 24)
+                    || (Math.abs(newColor.getRed() - lastColor.getRed()) >= 12
+                    || Math.abs(newColor.getBlue() - lastColor.getBlue()) >= 12
+                    || Math.abs(newColor.getGreen() - lastColor.getGreen()) >= 12)) {
                 centX = x + (i - x) / 2;
             } else {
                 break;
@@ -105,9 +106,9 @@ public class ColorFilterFinder {
 
     private static boolean like(Color a, Color b) {
         return !((Math.abs(a.getRed() - b.getRed()) + Math.abs(a.getBlue() - b.getBlue())
-                + Math.abs(a.getGreen() - b.getGreen()) >= 20)
-                || (Math.abs(a.getRed() - b.getRed()) >= 15 || Math.abs(a.getBlue() - b.getBlue()) >= 15
-                || Math.abs(a.getGreen() - b.getGreen()) >= 15));
+                + Math.abs(a.getGreen() - b.getGreen()) >= 24)
+                || (Math.abs(a.getRed() - b.getRed()) >= 12 || Math.abs(a.getBlue() - b.getBlue()) >= 12
+                || Math.abs(a.getGreen() - b.getGreen()) >= 12));
     }
 
     public static void updateLastShapeMinMax(BufferedImage bufferedImage, Point first, Point second) {
@@ -143,4 +144,24 @@ public class ColorFilterFinder {
 
     }
 
+
+    public static String toHexFromColor(Color color) {
+        String r, g, b;
+        StringBuilder su = new StringBuilder();
+        r = Integer.toHexString(color.getRed());
+        g = Integer.toHexString(color.getGreen());
+        b = Integer.toHexString(color.getBlue());
+        r = r.length() == 1 ? "0" + r : r;
+        g = g.length() == 1 ? "0" + g : g;
+        b = b.length() == 1 ? "0" + b : b;
+        r = r.toUpperCase();
+        g = g.toUpperCase();
+        b = b.toUpperCase();
+        su.append("0xFF");
+        su.append(r);
+        su.append(g);
+        su.append(b);
+        //0xFF0000FF
+        return su.toString();
+    }
 }

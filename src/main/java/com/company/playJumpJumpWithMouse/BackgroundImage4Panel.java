@@ -1,7 +1,10 @@
 package com.company.playJumpJumpWithMouse;
 
-import java.awt.Graphics;
-import java.awt.Point;
+import org.apache.commons.cli.*;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -9,18 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import java.util.regex.Pattern;
-
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
 
 /**
  * Created by RoyZ on 2017/12/28.
@@ -271,9 +262,14 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                             }
                         } else {
                             Point colorfilterCenter = ColorFilterFinder.findEndCenter(bufferedImage, firstPoint);
-                            if (Math.abs(secondPoint.getX() - colorfilterCenter.getX()) > ScreenAdapter.getBabyWidth() / 3) {
-                                secondPoint = colorfilterCenter;
+                            if (colorfilterCenter == null)
+                                System.out.println("can not find end center by color diff");
+                            else {
+                                if (Math.abs(secondPoint.getX() - colorfilterCenter.getX()) > ScreenAdapter.getBabyWidth() / 3) {
+                                    secondPoint = colorfilterCenter;
+                                }
                             }
+
                         }
                         System.out.println("firstPoint = [x=" + firstPoint.x + ",y=" + firstPoint.y
                                 + "] , secondPoint = [x=" + secondPoint.x + ",y=" + secondPoint.y + "]");

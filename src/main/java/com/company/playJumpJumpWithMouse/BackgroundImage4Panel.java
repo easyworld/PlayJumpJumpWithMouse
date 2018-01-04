@@ -55,8 +55,6 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
      */
     public static void main(String[] args) {
 
-        ScreenAdapter.SCREEN_DPI = AdbCaller.getSize();
-
         final int resizedScreenWidth, resizedScreenHeight;
         final double resizedDistancePressTimeRatio;
         final int screenshotInterval;
@@ -144,6 +142,9 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
             hf.printHelp("PlayJumpJumpWithMouse", options, true);
             return;
         }
+
+        ScreenAdapter.SCREEN_DPI = AdbCaller.getSize();
+
         //去掉了-r参数,改成根据width来进行自动换算.
         resizedDistancePressTimeRatio = Constants.RESIZED_DISTANCE_PRESS_TIME_RATIO * Constants.RESIZED_SCREEN_WIDTH / resizedScreenWidth;
         if (playMode == Constants.MODE_MANUAL || playMode == Constants.MODE_SEMI_AUTO) {

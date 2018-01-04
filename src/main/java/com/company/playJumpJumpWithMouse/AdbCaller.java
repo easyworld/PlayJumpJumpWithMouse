@@ -106,7 +106,7 @@ public class AdbCaller {
 
     public static int getSize() {
         try {
-            Process p = Runtime.getRuntime().exec("adb shell wm density");
+            Process p = Runtime.getRuntime().exec(adbPath + " shell wm density");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line = bufferedReader.readLine();
             String[] splis = line.split(" ");

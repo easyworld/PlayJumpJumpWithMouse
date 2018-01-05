@@ -57,6 +57,9 @@ java -jar playJumpJumpWithMouse.jar -a "C:\Users\Home\Desktop\platform-tools\adb
 * [SDK Platform-Tools for Mac](https://dl.google.com/android/repository/platform-tools-latest-darwin.zip)
 * [SDK Platform-Tools for Linux](https://dl.google.com/android/repository/platform-tools-latest-linux.zip)
 
+## 问题交流群
+![qr_code](https://raw.githubusercontent.com/easyworld/PlayJumpJumpWithMouse/master/qr_code.jpg)
+
 ## 感谢
 
 * [@xenv](https://github.com/xenv)的文件流截图法

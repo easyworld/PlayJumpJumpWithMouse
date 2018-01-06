@@ -79,9 +79,6 @@ public class ColorFilterFinder {
         if (centY - tmpStartCenterPoint.y > ScreenAdapter.getMaxShapeHeight()) {
             centY = tmpStartCenterPoint.y + ScreenAdapter.getMaxShapeHeight();
         }
-        if (JumpPerfectControl.needMis()) {
-            centY -= 10;
-        }
         return new Point(centX, centY);
     }
 

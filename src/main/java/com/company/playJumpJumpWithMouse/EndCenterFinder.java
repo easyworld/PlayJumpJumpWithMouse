@@ -1,12 +1,10 @@
 package com.company.playJumpJumpWithMouse;
 
-import java.awt.Color;
-import java.awt.Point;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 /**
  * 找白点,也就是连跳的中心点 Created by tangshuai on 2017/12/29.
@@ -49,7 +47,7 @@ public class EndCenterFinder {
                 }
             }
         }
-        return new Point((int) (centerX * scaleX), JumpPerfectControl.needMis() ? centerY - 10 : centerY - 1);
+        return new Point((int) (centerX * scaleX), centerY - 1);
     }
 
     static Point findWhiteCenter(BufferedImage bufferedImage, int x, int y, Point startCenterPoint) {

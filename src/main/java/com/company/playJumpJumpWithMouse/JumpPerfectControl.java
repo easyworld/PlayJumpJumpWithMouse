@@ -9,22 +9,18 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class JumpPerfectControl {
 
-    private static AtomicInteger jumpCouter = new AtomicInteger(0);
-
-    private static int randomMagic = 10;
-
     public static boolean random = false;
+    public static int randomStepPx = 50;
 
-    public static boolean needMis() {
-        return random && jumpCouter.get() % randomMagic == 0;
-    }
-
-    public static void jumpNext() {
-        int counter = jumpCouter.incrementAndGet();
-        if (random && counter % randomMagic == 0) {
-            randomMagic = 10 + new Random().nextInt(20);
-            jumpCouter.set(0);
-        }
+    /**
+     * 距离随机偏移50px，模仿人类的行为
+     *
+     * @return
+     */
+    public static int getRandomDistance(int distance) {
+        int result = (int) (distance + ((Math.random() - 0.5) * 2 * randomStepPx));
+        System.out.println("calculated distance " + distance + ", random distance " + result);
+        return result;
     }
 
 }

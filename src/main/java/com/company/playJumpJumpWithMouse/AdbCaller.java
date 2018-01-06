@@ -41,7 +41,6 @@ public class AdbCaller {
             while ((s = bufferedReader.readLine()) != null)
                 System.out.println(s);
             process.waitFor();
-            JumpPerfectControl.jumpNext();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

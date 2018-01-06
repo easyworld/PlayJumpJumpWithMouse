@@ -79,7 +79,7 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
         opt.setRequired(false);
         options.addOption(opt);
 
-        opt = new Option("r", "random", true, "random done perfect, Y:yes, N:no");
+        opt = new Option("r", "random", true, "random jump range (unit pixel), eg:50");
         opt.setRequired(false);
         options.addOption(opt);
 
@@ -124,9 +124,8 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                 playMode = Constants.MODE_SEMI_AUTO;
             }
             if (commandLine.getOptionValue('r') != null) {
-                if (commandLine.getOptionValue('r').toLowerCase().trim().equals("y")) {
-                    JumpPerfectControl.random = true;
-                }
+                JumpPerfectControl.random = true;
+                JumpPerfectControl.randomStepPx = Integer.parseInt(commandLine.getOptionValue('r'));
             }
 
         } catch (ParseException e) {
@@ -275,6 +274,9 @@ public class BackgroundImage4Panel extends javax.swing.JFrame {
                                 + "] , secondPoint = [x=" + secondPoint.x + ",y=" + secondPoint.y + "]");
                         ColorFilterFinder.updateLastShapeMinMax(bufferedImage, firstPoint, secondPoint);
                         distance = distance(firstPoint, secondPoint);
+                        if (JumpPerfectControl.random) {
+                            distance = JumpPerfectControl.getRandomDistance(distance);
+                        }
                         AdbCaller.longPress(distance * resizedDistancePressTimeRatio, bufferedImage);// magic
                         // number
                         try {

@@ -28,7 +28,7 @@ public class AdbCaller {
      *
      * @param timeMilli
      */
-    public static void longPress(double timeMilli, BufferedImage image) {
+    public static void longPress(double timeMilli, BufferedImage image) throws IOException, InterruptedException{
         try {
             int x = image.getWidth() / 3 + (int) (Math.random() * image.getWidth() / 3);
             int y = image.getHeight() - 300 + (int) (Math.random() * 200);
@@ -41,10 +41,12 @@ public class AdbCaller {
             while ((s = bufferedReader.readLine()) != null)
                 System.out.println(s);
             process.waitFor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (IOException io) {
+            String msg = "IOException occurred: " + io.getLocalizedMessage();
+                throw new IOException(msg, io);
+        } catch (InterruptedException ie) {
+            String msg = "InterruptedException occurred: " + ie.getLocalizedMessage();
+                throw new InterruptedException(msg, ie);
         }
     }
 
@@ -53,7 +55,7 @@ public class AdbCaller {
      * 感谢 hxzqlh
      * 当改进的截图方法不能正常执行时降级为常规方法
      */
-    public static void printScreen() {
+    public static void printScreen() throws IOException, InterruptedException{
         if (error != null && error) {
             printScreenWithOld();
         } else {
@@ -71,12 +73,14 @@ public class AdbCaller {
                     System.out.println(s);
                 p1.waitFor();
                 checkScreenSuccess();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException io) {
+            String msg = "IOException occurred: " + io.getLocalizedMessage();
+                throw new IOException(msg, io);
                 error = true;
                 printScreenWithOld();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (InterruptedException ie) {
+            String msg = "InterruptedException occurred: " + ie.getLocalizedMessage();
+                throw new InterruptedException(msg, ie);
             }
         }
     }
@@ -85,21 +89,23 @@ public class AdbCaller {
         if (error == null) {
             BufferedImage image = ImageIO.read(new File(screenshotLocation));
             if (image == null) {
-                throw new IOException("cann't read file \"" + screenshotLocation + "\" into image object");
+                throw new IOException("Can't read file \"" + screenshotLocation + "\" into image object.");
             }
         }
     }
 
-    public static void printScreenWithOld() {
+    public static void printScreenWithOld() throws IOException, InterruptedException{
         try {
             Process p1 = Runtime.getRuntime().exec(adbPath + " shell screencap -p /sdcard/screenshot.png");
             p1.waitFor();
             Process p2 = Runtime.getRuntime().exec(adbPath + " pull /sdcard/screenshot.png " + screenshotLocation);
             p2.waitFor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (IOException io) {
+            String msg = "IOException occurred: " + io.getLocalizedMessage();
+                throw new IOException(msg, io);
+        } catch (InterruptedException ie) {
+            String msg = "InterruptedException occurred: " + ie.getLocalizedMessage();
+                throw new InterruptedException(msg, ie);
         }
     }
 
@@ -111,7 +117,8 @@ public class AdbCaller {
             String[] splis = line.split(" ");
             return Integer.valueOf(splis[splis.length - 1]);
         } catch (Exception e) {
-            e.printStackTrace();
+            String msg = "Exception occured while getting size: " + e.getLocalizedMessage();
+            throw new Exception(msg, e)
         }
         return 400;
     }
